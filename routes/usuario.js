@@ -134,7 +134,7 @@ app.put('/:id', mdAutenticacion.verificarToken, (req, res) => {
 //  Crear usuarios
 // ============================================================== 
 
-app.post('/', mdAutenticacion.verificarToken, (req, res) => {
+app.post('/', (req, res) => {
     var body = req.body;
 
     var usuario = new Usuarios({
