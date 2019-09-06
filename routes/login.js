@@ -87,7 +87,8 @@ app.post('/google', async(req, res) => {
                     message: 'peticion de login correcta',
                     usuario: usuarioDB,
                     token: token,
-                    id: usuarioDB._id
+                    id: usuarioDB._id,
+                    menu: obtenerMenu(usuarioDB.role)
                 });
             }
         } else {
@@ -110,7 +111,8 @@ app.post('/google', async(req, res) => {
                     message: 'peticion de login correcta',
                     usuario: usuarioDB,
                     token: token,
-                    id: usuarioDB._id
+                    id: usuarioDB._id,
+                    menu: obtenerMenu(usuarioDB.role)
                 });
             })
         }
@@ -164,11 +166,49 @@ app.post('/', (req, res) => {
             message: 'peticion de login correcta',
             usuario: usuarioDB,
             token: token,
-            id: usuarioDB._id
+            id: usuarioDB._id,
+            menu: obtenerMenu(usuarioDB.role)
         });
     });
 
 
 });
+
+function obtenerMenu(role) {
+
+    var menu = [{
+            title: 'Pricipal',
+            icon: 'mdi mdi-gauge',
+            submenu: [
+                { title: 'Dashboard', url: '/dashboard' },
+                { title: 'Progreso', url: '/progress' },
+                { title: 'Grafica 1', url: '/graph1' },
+                { title: 'Promesas', url: '/promises' },
+                { title: 'RXJS', url: '/rxjs' },
+            ]
+        },
+        {
+            title: 'Mantenimiento',
+            icon: 'mdi mdi-folder-lock-open',
+            submenu: [
+                //   {title: 'usuarios', url: '/usuarios'},
+                { title: 'medicos', url: '/medicos' },
+                { title: 'hospitales', url: '/hospitales' },
+
+            ]
+        }
+    ];
+
+
+    if (role === 'ADMIN_ROLE') {
+        menu[1].submenu.unshift({ title: 'usuarios', url: '/usuarios' });
+    }
+
+
+
+    return menu;
+}
+
+
 
 module.exports = app;

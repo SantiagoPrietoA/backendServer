@@ -21,7 +21,7 @@ app.get('/', (req, res, next) => {
 
     desde = Number(desde);
 
-    Usuarios.find({}, "name email img role")
+    Usuarios.find({}, "name email img role google")
         .limit(5)
         .skip(desde)
         .exec(
@@ -81,7 +81,7 @@ app.get('/', (req, res, next) => {
 //  Actualizar usuario
 // ============================================================== 
 
-app.put('/:id', mdAutenticacion.verificarToken, (req, res) => {
+app.put('/:id', [mdAutenticacion.verificarToken, mdAutenticacion.verificarAdmin_o_Mismo], (req, res) => {
 
     var id = req.params.id;
     var body = req.body;
@@ -170,7 +170,7 @@ app.post('/', (req, res) => {
 //  Borrar usuario
 // ============================================================== 
 
-app.delete('/:id', mdAutenticacion.verificarToken, (req, res) => {
+app.delete('/:id', [mdAutenticacion.verificarToken, mdAutenticacion.verificarAdmin], (req, res) => {
 
     var id = req.params.id;
 
